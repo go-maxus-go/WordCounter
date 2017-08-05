@@ -1,4 +1,4 @@
-.autosave
+*.autosave
 build*
 *user
-.DC_Store
+*.DC_Store

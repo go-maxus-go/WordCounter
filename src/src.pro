@@ -9,6 +9,9 @@ TEMPLATE = lib
 TARGET = WordCounter
 
 HEADERS += CommandParser.h \
-    ArgsDesc.h
+    ArgsDesc.h \
+    ICheckSummator.h \
+    AdditionSummator.h
 SOURCES += CommandParser.cpp \
-    ArgsDesc.cpp
+    ArgsDesc.cpp \
+    ICheckSummator.cpp

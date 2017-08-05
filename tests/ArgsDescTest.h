@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-class  ArgsDescTest: public QObject
+class ArgsDescTest: public QObject
 {
     Q_OBJECT
 public:

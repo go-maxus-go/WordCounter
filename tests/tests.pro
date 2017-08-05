@@ -8,10 +8,12 @@ QT += testlib core
 TEMPLATE = app
 
 HEADERS += CommandParserTest.h \
-    ArgsDescTest.h
+    ArgsDescTest.h \
+    AdditionSummatorTest.h
 
 SOURCES += main.cpp \
         CommandParserTest.cpp \
-    ArgsDescTest.cpp
+    ArgsDescTest.cpp \
+    AdditionSummatorTest.cpp
 
 LIBS += -L../src -lWordCounter
