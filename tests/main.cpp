@@ -4,6 +4,7 @@
 #include "CommandParserTest.h"
 #include "ArgsDescTest.h"
 #include "AdditionSummatorTest.h"
+#include "FileReaderTest.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     QTest::qExec(new CommandParserTest    , argc, argv);
     QTest::qExec(new ArgsDescTest         , argc, argv);
     QTest::qExec(new AdditionSummatorTest , argc, argv);
+    QTest::qExec(new FileReaderTest       , argc, argv);
 
     return 0;
 }

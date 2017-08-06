@@ -2,7 +2,8 @@
 
 #include "CommandParser.h"
 #include "ArgsDesc.h"
-#include <ICheckSummator.h>
+#include "ICheckSummator.h"
+#include "FileReader.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     auto summator = createCheckSummator();
 
     std::cout << summator->checkSum(42) << std::endl;
+    FileReader fileReader("", std::ifstream::in);
 
     std::cout << "Hello 2gis!" << std::endl;
 
