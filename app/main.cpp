@@ -4,6 +4,7 @@
 #include "ArgsDesc.h"
 #include "ICheckSummator.h"
 #include "FileReader.h"
+#include "WordCounter.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
 
     std::cout << summator->checkSum(42) << std::endl;
     FileReader fileReader("", std::ifstream::in);
+
+    WordCounter counter("hello");
 
     std::cout << "Hello 2gis!" << std::endl;
 
