@@ -13,9 +13,11 @@ HEADERS += CommandParser.h \
     ICheckSummator.h \
     AdditionSummator.h \
     FileReader.h \
-    WordCounter.h
+    WordCounter.h \
+    Commander.h
 SOURCES += CommandParser.cpp \
     ArgsDesc.cpp \
     ICheckSummator.cpp \
     FileReader.cpp \
-    WordCounter.cpp
+    WordCounter.cpp \
+    Commander.cpp
