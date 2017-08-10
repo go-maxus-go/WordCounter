@@ -6,7 +6,10 @@ CONFIG -= qt
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+HEADERS += Application.h
+
+SOURCES += main.cpp \
+    Application.cpp
 
 LIBS += -L../src -lWordCounter
 

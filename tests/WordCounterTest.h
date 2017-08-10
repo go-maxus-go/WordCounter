@@ -10,4 +10,7 @@ public:
 
 private slots:
     void correctCount();
+    void falseCount();
+    void caseInsensitive();
+    void anotherLanguage();
 };

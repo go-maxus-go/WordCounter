@@ -1,6 +1,8 @@
 #include "WordCounter.h"
 
+#include <cctype>
 #include <sstream>
+#include <algorithm>
 
 class WordCounter::Impl
 {
@@ -9,8 +11,10 @@ public:
 public:
     void process(const std::string & data)
     {
-        if (m_word.empty())
+        if (m_word.empty() || data.empty())
             return;
+        if (std::isspace(*data.begin()))
+            m_buffer.clear();
         std::stringstream ss(data);
         std::string word;
         while (ss >> word)
@@ -20,15 +24,20 @@ public:
                 word = m_buffer + word;
                 m_buffer.clear();
             }
-            // TODO: smart compare
-            if (m_word == word)
+            if (isEqual(m_word, word))
                 ++m_counter;
         }
-        if (word.size() < m_word.size())
+        if (word.size() < m_word.size() && !std::isspace(*data.rbegin()))
             m_buffer = word;
     }
     unsigned long count() const
         { return m_counter; }
+private:
+    bool isEqual(const std::string & l, const std::string & r) const
+    {
+        // TODO: smart compare, exept symbols like: ,.!? and so on ...
+        return _stricmp(l, r);
+    }
 private:
     const std::string m_word;
     unsigned long m_counter = 0;

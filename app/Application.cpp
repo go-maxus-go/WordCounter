@@ -80,7 +80,7 @@ private:
 private:
     int m_argc;
     char ** m_argv;
-    int m_bufferSize = 1024 * 1024;
+    int m_bufferSize = 1024 * 1024; // must be dividable by 4
     std::unique_ptr<FileReader> m_fileReader;
 };
 

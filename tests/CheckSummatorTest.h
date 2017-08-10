@@ -9,5 +9,6 @@ public:
     explicit CheckSummatorTest(QObject * p = 0) : QObject(p) {}
 
 private slots:
-    void checkSumIsValid();
+    void checkSumForSingleNumber();
+    void checkSumForBuffer();
 };
