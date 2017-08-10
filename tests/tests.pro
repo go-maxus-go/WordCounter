@@ -9,15 +9,15 @@ TEMPLATE = app
 
 HEADERS += CommandParserTest.h \
     ArgsDescTest.h \
-    AdditionSummatorTest.h \
     FileReaderTest.h \
-    WordCounterTest.h
+    WordCounterTest.h \
+    CheckSummatorTest.h
 
 SOURCES += main.cpp \
         CommandParserTest.cpp \
     ArgsDescTest.cpp \
-    AdditionSummatorTest.cpp \
     FileReaderTest.cpp \
-    WordCounterTest.cpp
+    WordCounterTest.cpp \
+    CheckSummatorTest.cpp
 
 LIBS += -L../src -lWordCounter

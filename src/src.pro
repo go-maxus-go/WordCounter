@@ -10,14 +10,15 @@ TARGET = WordCounter
 
 HEADERS += CommandParser.h \
     ArgsDesc.h \
-    ICheckSummator.h \
-    AdditionSummator.h \
+    CheckSummator.h \
     FileReader.h \
     WordCounter.h \
-    Commander.h
+    Commander.h \
+    Application.h
 SOURCES += CommandParser.cpp \
     ArgsDesc.cpp \
-    ICheckSummator.cpp \
+    CheckSummator.cpp \
     FileReader.cpp \
     WordCounter.cpp \
-    Commander.cpp
+    Commander.cpp \
+    Application.cpp

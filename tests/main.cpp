@@ -1,11 +1,11 @@
 #include <QtTest>
 #include <QCoreApplication>
 
-#include "CommandParserTest.h"
 #include "ArgsDescTest.h"
-#include "AdditionSummatorTest.h"
 #include "FileReaderTest.h"
 #include "WordCounterTest.h"
+#include "CheckSummatorTest.h"
+#include "CommandParserTest.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 
     QTest::qExec(new CommandParserTest    , argc, argv);
     QTest::qExec(new ArgsDescTest         , argc, argv);
-    QTest::qExec(new AdditionSummatorTest , argc, argv);
+    QTest::qExec(new CheckSummatorTest , argc, argv);
     QTest::qExec(new FileReaderTest       , argc, argv);
     QTest::qExec(new WordCounterTest      , argc, argv);
 

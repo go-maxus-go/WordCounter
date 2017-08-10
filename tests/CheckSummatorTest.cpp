@@ -1,12 +1,12 @@
-#include "AdditionSummatorTest.h"
+#include "CheckSummatorTest.h"
 
 #include <QTest>
 
-#include "AdditionSummator.h"
+#include "CheckSummator.h"
 
-void AdditionSummatorTest::checkSumIsValid()
+void CheckSummatorTest::checkSumIsValid()
 {
-    AdditionSummator summator;
+    CheckSummator summator;
     QVERIFY(summator.checkSum(0) == 0);
     QVERIFY(summator.checkSum(0xDEADBEEF) == 0xDEADBEEF);
     QVERIFY(summator.checkSum(0xBAADF00D) == 0x995BAEFC);
