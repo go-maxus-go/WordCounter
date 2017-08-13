@@ -1,0 +1,4 @@
+*.autosave
+build*
+*user
+.DC_Store
