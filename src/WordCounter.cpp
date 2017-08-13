@@ -19,7 +19,7 @@ public:
         std::string word;
         while (ss >> word)
         {
-            if (!m_buffer.empty())
+            if (!m_buffer.empty()) // TODO: take out of the loop?
             {
                 word = m_buffer + word;
                 m_buffer.clear();
@@ -41,7 +41,11 @@ private:
                 [](auto ch){ return std::toupper(ch); });
             return s;
         };
-        return toUpper(l) == toUpper(r); // m_word goes to upper many times =)
+        // m_word goes to upper many times, can be optimized
+        // wearch with overlaps, like in text editors
+        return std::string::npos != toUpper(r).find(toUpper(l));
+        // strick comparison
+        //return toUpper(l) == toUpper(r);
     }
 private:
     const std::string m_word;
