@@ -36,7 +36,12 @@ private:
     bool isEqual(const std::string & l, const std::string & r) const
     {
         // TODO: smart compare, exept symbols like: ,.!? and so on ...
-        return _stricmp(l, r);
+        auto toUpper= [](std::string s) {
+            std::transform(s.begin(), s.end(), s.begin(),
+                [](auto ch){ return std::toupper(ch); });
+            return s;
+        };
+        return toUpper(l) == toUpper(r); // m_word goes to upper many times =)
     }
 private:
     const std::string m_word;

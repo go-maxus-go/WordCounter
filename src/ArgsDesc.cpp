@@ -17,6 +17,7 @@ ArgsDesc::ArgsDesc()
     auto addMode = [this](auto mode, auto type, auto desc)
     {
         m_mode2modeType[mode] = type;
+        m_modeType2mode[type] = mode;
         m_modeType2desc[type] = desc;
     };
     addMode("words"   , ModeType::Words   , "Count words in file");
@@ -30,6 +31,11 @@ std::string ArgsDesc::arg(ArgType type) const
 {
     auto it = m_type2arg.find(type);
     return it == m_type2arg.end() ? std::string() : it->second;
+}
+std::string ArgsDesc::arg(ModeType type) const
+{
+    auto it = m_modeType2mode.find(type);
+    return it == m_modeType2mode.end() ? std::string() : it->second;
 }
 std::string ArgsDesc::desc(ArgType type) const
 {

@@ -12,5 +12,3 @@ SOURCES += main.cpp \
     Application.cpp
 
 LIBS += -L../src -lWordCounter
-
-HEADERS +=

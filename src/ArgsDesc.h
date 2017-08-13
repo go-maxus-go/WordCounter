@@ -29,6 +29,7 @@ public:
     }
     std::list<std::string> args() const;
     std::string arg (ArgType ) const;
+    std::string arg (ModeType) const;
     std::string desc(ArgType ) const;
     std::string desc(ModeType) const;
 
@@ -40,5 +41,6 @@ private:
     std::map<std::string, ArgType> m_arg2type;
     std::map<ArgType, std::string> m_type2desc;
     std::map<std::string, ModeType> m_mode2modeType;
+    std::map<ModeType, std::string> m_modeType2mode;
     std::map<ModeType, std::string> m_modeType2desc;
 };

@@ -39,6 +39,20 @@ private:
     int showHelp()
     {
         std::cout << "Help:" << std::endl;
+        auto printParam = [](auto p) {
+            std::cout << ArgsDesc::get().arg(p) << " " << ArgsDesc::get().desc(p)
+                      << std::endl;
+        };
+        auto printMode = [](auto m) {
+            std::cout << "   " << "\"" << ArgsDesc::get().arg(m) << "\""
+                      << " - " << ArgsDesc::get().desc(m) << std::endl;
+        };
+        printParam(ArgsDesc::ArgType::File);
+        printParam(ArgsDesc::ArgType::Mode);
+        printMode (ArgsDesc::ModeType::CheckSum);
+        printMode (ArgsDesc::ModeType::Words);
+        printParam(ArgsDesc::ArgType::Word);
+        printParam(ArgsDesc::ArgType::Help);
         return 0;
     }
     int countWord(const std::string & file, const std::string & word)
@@ -46,9 +60,10 @@ private:
         if (auto res = openFile(file, std::ifstream::in))
             return res;
         WordCounter wordCounter(word);
-        char * buffer = new char[m_bufferSize]; // memory leak danger
-        while (auto readSize = m_fileReader->readBuffer(buffer, m_bufferSize))
-            wordCounter.process(std::string(buffer, readSize));
+        std::unique_ptr<char[]> buffer(new char[m_bufferSize]);
+        // TODO: fix utf encoding issues new buffer reading
+        while (auto readSize = m_fileReader->readBuffer(buffer.get(), m_bufferSize))
+            wordCounter.process(std::string(buffer.get(), readSize));
 
         std::cout <<  word << " : " << wordCounter.count()
                   << std::endl;
@@ -59,9 +74,9 @@ private:
         if (auto res = openFile(file, std::ifstream::in))
             return res;
         CheckSummator summator;
-        char * buffer = new char[m_bufferSize]; // memory leak danger
-        while (auto readSize = m_fileReader->readBuffer(buffer, m_bufferSize))
-            summator.checkSum(reinterpret_cast<uint8_t*>(buffer), readSize);
+        std::unique_ptr<char[]> buffer(new char[m_bufferSize]);
+        while (auto readSize = m_fileReader->readBuffer(buffer.get(), m_bufferSize))
+            summator.checkSum(reinterpret_cast<uint8_t*>(buffer.get()), readSize);
 
         std::cout << "CheckSum = " << std::hex << summator.checkSum()
                   << std::endl;
