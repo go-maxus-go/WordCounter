@@ -1,11 +1,11 @@
-#include "CommandParser.h"
+#include "ArgsParser.h"
 
 #include <map>
 #include <set>
 
 using StringList = std::list<std::string>;
 
-class CommandParser::Impl
+class ArgsParser::Impl
 {
 public:
     void setOption(const std::string & option)
@@ -40,14 +40,14 @@ private:
     std::map<std::string, StringList> m_values;
 };
 
-CommandParser::CommandParser() : m_impl(new Impl) {}
-CommandParser::~CommandParser() = default;
+ArgsParser::ArgsParser() : m_impl(new Impl) {}
+ArgsParser::~ArgsParser() = default;
 
-void CommandParser::setOption(const std::string & option)
+void ArgsParser::setOption(const std::string & option)
     { m_impl->setOption(option); }
-bool CommandParser::parse(const StringList & args)
+bool ArgsParser::parse(const StringList & args)
     { return m_impl->parse(args); }
-bool CommandParser::isSet(const std::string & option) const
+bool ArgsParser::isSet(const std::string & option) const
     { return m_impl->isSet(option); }
-StringList CommandParser::values(const std::string & option) const
+StringList ArgsParser::values(const std::string & option) const
     { return m_impl->values(option); }

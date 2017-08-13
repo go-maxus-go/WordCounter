@@ -8,13 +8,13 @@ TEMPLATE = lib
 
 TARGET = WordCounter
 
-HEADERS += CommandParser.h \
+HEADERS += ArgsParser.h \
     ArgsDesc.h \
     CheckSummator.h \
     FileReader.h \
     WordCounter.h \
     Commander.h
-SOURCES += CommandParser.cpp \
+SOURCES += ArgsParser.cpp \
     ArgsDesc.cpp \
     CheckSummator.cpp \
     FileReader.cpp \

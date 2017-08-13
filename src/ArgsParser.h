@@ -3,11 +3,11 @@
 #include <list>
 #include <string>
 
-class CommandParser
+class ArgsParser
 {
 public:
-    CommandParser();
-    ~CommandParser();
+    ArgsParser();
+    ~ArgsParser();
 public:
     void setOption(const std::string & option);
     bool parse(const std::list<std::string> & args);

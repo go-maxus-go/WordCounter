@@ -2,11 +2,11 @@
 
 #include <QObject>
 
-class CommandParserTest : public QObject
+class ArgsParserTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit CommandParserTest(QObject * p = 0) : QObject(p) {}
+    explicit ArgsParserTest(QObject * p = 0) : QObject(p) {}
 
 private slots:
     void parsingIsPossible();

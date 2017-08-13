@@ -1,17 +1,17 @@
-#include "CommandParserTest.h"
+#include "ArgsParserTest.h"
 
 #include <QTest>
 
 #include <list>
 #include <string>
 
-#include "CommandParser.h"
+#include "ArgsParser.h"
 
 using StringList = std::list<std::string>;
 
-void CommandParserTest::parsingIsPossible()
+void ArgsParserTest::parsingIsPossible()
 {
-    CommandParser p;
+    ArgsParser p;
 
     QVERIFY(p.parse({"-a", "1"}) == false);
 
@@ -20,9 +20,9 @@ void CommandParserTest::parsingIsPossible()
     QVERIFY(p.parse({"-a", "1"}) == true);
     QVERIFY(p.parse({"1", "-a"}) == true);
 }
-void CommandParserTest::correctParsedArguments()
+void ArgsParserTest::correctParsedArguments()
 {
-    CommandParser p;
+    ArgsParser p;
     p.setOption("-a");
     p.setOption("-b");
 
@@ -33,9 +33,9 @@ void CommandParserTest::correctParsedArguments()
     QVERIFY(p.isSet("-b"));
     QVERIFY(p.isSet("-c") == false);
 }
-void CommandParserTest::correctParsedValues()
+void ArgsParserTest::correctParsedValues()
 {
-    CommandParser p;
+    ArgsParser p;
     p.setOption("-a");
     p.setOption("-b");
 

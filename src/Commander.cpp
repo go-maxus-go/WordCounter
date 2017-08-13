@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "ArgsDesc.h"
-#include "CommandParser.h"
+#include "ArgsParser.h"
 
 class Commander::Impl
 {
@@ -12,25 +12,22 @@ class Commander::Impl
 public:
     Command retrieveCommand(int argc, char * argv[])
     {
-        auto & argsDesc = ArgsDesc::get();
         std::list<std::string> args;
         for (int i = 1; i < argc; ++i)
             args.push_back(std::string(argv[i]));
 
-        const auto options = argsDesc.args();
+        const auto options = AD.args();
         for (auto option : options)
             m_parser.setOption(option);
 
-        if (!m_parser.parse(args))
-            return Command::Invalid;
-        if (m_parser.isSet(""))
+        if (!m_parser.parse(args) || m_parser.isSet(""))
             return Command::Invalid;
 
         auto optionCount = std::count_if(options.begin(), options.end(),
             [this](auto o){ return m_parser.isSet(o); });
         // Help
-        auto helpValues = m_parser.values(argsDesc.arg(ArgType::Help));
-        if (m_parser.isSet(argsDesc.arg(ArgType::Help)))
+        auto helpValues = m_parser.values(AD.arg(ArgType::Help));
+        if (m_parser.isSet(AD.arg(ArgType::Help)))
             return (optionCount == 1 && helpValues.empty())
                    ? Command::Help : Command::Invalid;
 
@@ -41,12 +38,13 @@ public:
         switch (m_mode)
         {
         case ArgsDesc::ModeType::CheckSum:
-            return m_file.empty() || m_parser.isSet(argsDesc.arg(ArgType::Word))
+            return m_file.empty() || m_parser.isSet(AD.arg(ArgType::Word))
                    ? Command::Invalid : Command::CheckSum;
         case ArgsDesc::ModeType::Words:
             return m_file.empty() || m_word.empty()
                    ? Command::Invalid : Command::CountWord;
-        default: return Command::Invalid;
+        default:
+            return Command::Invalid;
         }
         return Command::Invalid;
     }
@@ -55,37 +53,37 @@ public:
 private:
     void parseFile()
     {
-        if (!isSingleOption((ArgType::File)))
+        if (!isSingleOption(ArgType::File))
             return;
-        m_file = *m_parser.values(ArgsDesc::get().arg(ArgType::File)).begin();
+        m_file = m_parser.values(AD.arg(ArgType::File)).front();
     }
     void parseMode()
     {
-        if (!isSingleOption((ArgType::Mode)))
+        if (!isSingleOption(ArgType::File))
             return;
-        auto mode = *m_parser.values(ArgsDesc::get().arg(ArgType::Mode)).begin();
-        m_mode = ArgsDesc::get().mode(mode);
+        auto mode = m_parser.values(AD.arg(ArgType::Mode)).front();
+        m_mode = AD.mode(mode);
     }
     void parseWord()
     {
-        if (!isSingleOption((ArgType::Word)))
+        if (!isSingleOption(ArgType::Mode))
             return;
-        m_word = *m_parser.values(ArgsDesc::get().arg(ArgType::Word)).begin();
+        m_word = m_parser.values(AD.arg(ArgType::Word)).front();
     }
     bool isSingleOption(ArgType type)
     {
-        auto & argsDesc = ArgsDesc::get();
-        if (!m_parser.isSet(argsDesc.arg(type)))
+        if (!m_parser.isSet(AD.arg(type)))
             return false;
-        if (m_parser.values(argsDesc.arg(type)).size() != 1)
+        if (m_parser.values(AD.arg(type)).size() != 1)
             return false;
         return true;
     }
 private:
-    CommandParser m_parser;
+    ArgsParser m_parser;
     std::string m_file;
     std::string m_word;
     ArgsDesc::ModeType m_mode = ArgsDesc::ModeType::Invalid;
+    const ArgsDesc & AD = ArgsDesc::get();
 };
 
 Commander::Commander() : m_impl(new Impl) {}
