@@ -17,6 +17,5 @@ HEADERS += ArgsParser.h \
 SOURCES += ArgsParser.cpp \
     ArgsDesc.cpp \
     CheckSummator.cpp \
-    FileReader.cpp \
     WordCounter.cpp \
     Commander.cpp

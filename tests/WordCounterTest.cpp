@@ -6,53 +6,64 @@
 
 void WordCounterTest::correctCount()
 {
-    WordCounter counter("hi");
+    WordCounter counter(L"hi");
     QCOMPARE(counter.count(), 0UL);
 
-    counter.process("hi my name is Maxim");
+    counter.process(L"hi my name is Maxim");
     QCOMPARE(counter.count(), 1UL);
 
-    counter.process("qwe hi qwe");
+    counter.process(L"qwe hi qwe");
     QCOMPARE(counter.count(), 2UL);
 
-    counter.process("qwe hi");
+    counter.process(L"qwe hi");
     QCOMPARE(counter.count(), 3UL);
 
-    counter.process("hi hi hi qq");
+    counter.process(L"hi hi hi qq");
     QCOMPARE(counter.count(), 6UL);
 
-    counter.process("qwe h");
-    counter.process("i qwe");
+    counter.process(L"qwe h");
+    counter.process(L"i qwe");
     QCOMPARE(counter.count(), 7UL);
+
+    counter.process(L"qwe hiqw");
+    counter.process(L"qwei qwe");
+    QCOMPARE(counter.count(), 8UL);
 }
 void WordCounterTest::falseCount()
 {
-    WordCounter counter("hello");
+    WordCounter counter(L"hello");
 
-    counter.process("qwe hel");
-    counter.process(" lo qwe");
+    counter.process(L"qwe hel");
+    counter.process(L" lo qwe");
     QCOMPARE(counter.count(), 0UL);
 
-    counter.process("qwe hel ");
-    counter.process("lo qwe");
+    counter.process(L"qwe hel ");
+    counter.process(L"lo qwe");
     QCOMPARE(counter.count(), 0UL);
 
-    counter.process("qwe hel ");
-    counter.process(" lo qwe");
+    counter.process(L"qwe hel ");
+    counter.process(L" lo qwe");
     QCOMPARE(counter.count(), 0UL);
 }
 void WordCounterTest::caseInsensitive()
 {
-    WordCounter counter("Hello");
+    WordCounter counter(L"Hello");
 
-    counter.process("hello");
+    counter.process(L"hello");
     QCOMPARE(counter.count(), 1UL);
 }
 void WordCounterTest::anotherLanguage()
 {
-    // TODO: support encodings, better use QString in future
-    //WordCounter counter("привет");
+    WordCounter counter(L"привет");
 
-    //counter.process("Привет привет приВЕТ");
-    //QCOMPARE(counter.count(), 3UL);
+    counter.process(L"Привет привет приВЕТ");
+    QCOMPARE(counter.count(), 3UL);
+
+    counter.process(L"При ");
+    counter.process(L"вет ");
+    counter.process(L" При");
+    counter.process(L" вет");
+    counter.process(L" При ");
+    counter.process(L" вет ");
+    QCOMPARE(counter.count(), 3UL);
 }

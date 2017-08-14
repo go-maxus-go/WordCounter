@@ -12,19 +12,19 @@ void FileReaderTest::openFile()
     stream << "text";
     stream.close();
     {
-        FileReader fileReader("test", std::ifstream::in);
+        FileReader<char> fileReader("test", std::ifstream::in);
         QVERIFY(fileReader.isOpened());
     }
     {
-        FileReader fileReader("test", std::ifstream::binary);
+        FileReader<char> fileReader("test", std::ifstream::binary);
         QVERIFY(fileReader.isOpened());
     }
     {
-        FileReader fileReader("", std::ifstream::in);
+        FileReader<char> fileReader("", std::ifstream::in);
         QVERIFY(fileReader.isOpened() == false);
     }
     {
-        FileReader fileReader("", std::ifstream::binary);
+        FileReader<char> fileReader("", std::ifstream::binary);
         QVERIFY(fileReader.isOpened() == false);
     }
     std::remove("test");
@@ -37,11 +37,11 @@ void FileReaderTest::correctFileLength()
     stream.close();
     const auto size = sizeof(data) - 1; // because of null terminal
     {
-        FileReader fileReader("test", std::ifstream::in);
+        FileReader<char> fileReader("test", std::ifstream::in);
         QVERIFY(fileReader.length() == size);
     }
     {
-        FileReader fileReader("test", std::ifstream::binary);
+        FileReader<char> fileReader("test", std::ifstream::binary);
         QVERIFY(fileReader.length() == size);
     }
     std::remove("test");
@@ -60,7 +60,7 @@ void FileReaderTest::readBuffer()
     stream << input;
     stream.close();
     {
-        FileReader fileReader("test", std::ifstream::in);
+        FileReader<char> fileReader("test", std::ifstream::in);
         char data[1024] = { 0 };
         const auto size = fileReader.readBuffer(data, 1024);
 
