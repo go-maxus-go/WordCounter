@@ -6,10 +6,10 @@
 class WordCounter
 {
 public:
-    WordCounter(const std::string & word);
+    WordCounter(const std::wstring & word);
     ~WordCounter();
 public:
-    void process(const std::string & data);
+    void process(const std::wstring & data);
     unsigned long count() const;
 private:
     class Impl;

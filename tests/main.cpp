@@ -1,6 +1,8 @@
 #include <QtTest>
 #include <QCoreApplication>
 
+#include <locale>
+
 #include "ArgsDescTest.h"
 #include "FileReaderTest.h"
 #include "WordCounterTest.h"
@@ -10,6 +12,8 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+
+    std::locale::global(std::locale("en_US.UTF-8"));
 
     QTest::qExec(new ArgsDescTest     , argc, argv);
     QTest::qExec(new FileReaderTest   , argc, argv);

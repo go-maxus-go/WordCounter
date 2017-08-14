@@ -1,5 +1,6 @@
 #include "Application.h"
 
+#include <codecvt>
 #include <cassert>
 #include <iostream>
 
@@ -57,13 +58,17 @@ private:
     }
     int countWord(const std::string & file, const std::string & word)
     {
-        if (auto res = openFile(file, std::ifstream::in))
-            return res;
-        WordCounter wordCounter(word);
-        std::unique_ptr<char[]> buffer(new char[m_bufferSize]);
-        // TODO: fix utf encoding issues new buffer reading
-        while (auto readSize = m_fileReader->readBuffer(buffer.get(), m_bufferSize))
-            wordCounter.process(std::string(buffer.get(), readSize));
+        FileReader<wchar_t> reader(file, std::ifstream::in | std::ifstream::binary);
+        if (!reader.isOpened())
+            return fileErrorMessage();
+        std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+        WordCounter wordCounter(conv.from_bytes(word.data()));
+        std::unique_ptr<wchar_t[]> buffer(new wchar_t[m_bufferSize]);
+        while (auto readSize = reader.readBuffer(buffer.get(), m_bufferSize))
+        {
+            wordCounter.process(std::wstring(buffer.get(), readSize));
+            std::fill_n(buffer.get(), m_bufferSize, 0); // TODO: clear all time?
+        }
 
         std::cout <<  word << " : " << wordCounter.count()
                   << std::endl;
@@ -71,32 +76,27 @@ private:
     }
     int calculateCheckSum(const std::string & file)
     {
-        if (auto res = openFile(file, std::ifstream::in))
-            return res;
+        FileReader<char> reader(file, std::ifstream::in | std::ifstream::binary);
+        if (!reader.isOpened())
+            return fileErrorMessage();
         CheckSummator summator;
         std::unique_ptr<char[]> buffer(new char[m_bufferSize]);
-        while (auto readSize = m_fileReader->readBuffer(buffer.get(), m_bufferSize))
+        while (auto readSize = reader.readBuffer(buffer.get(), m_bufferSize))
             summator.checkSum(reinterpret_cast<uint8_t*>(buffer.get()), readSize);
 
         std::cout << "CheckSum = " << std::hex << summator.checkSum()
                   << std::endl;
         return 0;
     }
-    int openFile(const std::string & file, std::ifstream::openmode mode)
+    int fileErrorMessage()
     {
-        assert(m_fileReader.get() == nullptr);
-        m_fileReader.reset(new FileReader(file, mode));
-        if (m_fileReader->isOpened())
-            return 0;
         std::cout << "File can't be opened" << std::endl;
-        m_fileReader.reset();
         return 1;
     }
 private:
     int m_argc;
     char ** m_argv;
     int m_bufferSize = 1024 * 1024; // must be dividable by 4
-    std::unique_ptr<FileReader> m_fileReader;
 };
 
 Application::Application(int argc, char *argv[])
